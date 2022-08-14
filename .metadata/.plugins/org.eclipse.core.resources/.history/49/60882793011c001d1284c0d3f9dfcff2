@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>HOME</title>
+</head>
+<body>
+
+<h1>LIBRARY MANAGEMENT SYSTEM</h1>
+</body>
+</html>
