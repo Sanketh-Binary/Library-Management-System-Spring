@@ -19,7 +19,11 @@ public class Employee {
        
     }
 
-    public String getDesignation() {
+    public Employee() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getDesignation() {
         return designation;
     }
 

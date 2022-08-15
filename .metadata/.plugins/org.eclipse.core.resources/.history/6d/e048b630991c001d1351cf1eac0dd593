@@ -1,0 +1,8 @@
+package com.lms.model.persistence;
+
+import com.lms.bean.User;
+
+public interface UserDao {
+
+	User getUser(String username,String password);
+}

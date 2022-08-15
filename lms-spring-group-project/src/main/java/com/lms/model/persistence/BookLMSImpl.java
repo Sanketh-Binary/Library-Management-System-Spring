@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class BookLMSImpl implements BookLMSDAO {
-    String pass = "devesh_bamola";
+    String pass = "wiley";
 
     @Override
     public boolean addBook(Book book) {
@@ -80,6 +80,7 @@ public class BookLMSImpl implements BookLMSDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+            	int id=resultSet.getInt("bookId");
                 String bookName = resultSet.getString("bookName");
                 int isbnNumber = resultSet.getInt("ISBNNumber");
                 String authorName = resultSet.getString("bookAuthor");
@@ -87,7 +88,7 @@ public class BookLMSImpl implements BookLMSDAO {
                 String bookType = resultSet.getString("bookType");
                 int bookNumber = resultSet.getInt("noOfBooks");
 
-                book = new Book(bookName, isbnNumber, authorName, publisherName, bookType, bookNumber);
+                book = new Book(id,bookName, isbnNumber, authorName, publisherName, bookType, bookNumber);
             }
 
         } catch (SQLException e) {
@@ -162,7 +163,7 @@ public class BookLMSImpl implements BookLMSDAO {
                 String publisherName = resultSet.getString("bookAuthor");
                 String bookType = resultSet.getString("bookType");
                 int bookNumber = resultSet.getInt("noOfBooks");
-                bookList.add(new Book(bookName, isbnNumber, authorName, publisherName, bookType, bookNumber));
+                bookList.add(new Book(id,bookName, isbnNumber, authorName, publisherName, bookType, bookNumber));
             }
         } catch (SQLException e) {
             e.printStackTrace();

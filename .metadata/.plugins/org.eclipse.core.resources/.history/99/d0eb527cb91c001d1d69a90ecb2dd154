@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+</head>
+<body>
+<h1>Library Management System</h1>
+<hr>
+
+<hr>
+<h2>Employee Detail</h2>
+<table border="1">
+    <tr>
+        <th>Employee ID</th>
+        <th>Employee First Name</th>
+        <th>Employee Last Name</th>
+        <th>Designation</th>
+        <th>Number of Books Issued</th>
+        
+   
+   
+    private String publisherName;
+    private String bookType;
+    
+    </tr>
+    <tr th:each="book : ${bookList}">
+        <td th:text="${book.bookNumber}"></td>
+        <td th:text="${book.bookName}"></td>
+        <td th:text="${book.isbnNumber}"></td>
+        <td th:text="${book.authorName}"></td>
+        <td th:text="${book.bookType}"></td>
+        <td th:text="${book.publisherName}"></td>
+    </tr>
+</table>
+<br><br>
+<a href="./adminLand">Go To Main Page</a>
+</body>
+</html>

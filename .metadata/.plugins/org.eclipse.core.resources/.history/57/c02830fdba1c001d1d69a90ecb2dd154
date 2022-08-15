@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+</head>
+<body>
+<h1>Library Management System</h1>
+<hr>
+
+<hr>
+<h2> BOOK's</h2>
+<table border="1">
+    <tr>
+        <th>Book ID</th>
+        <th>Book Name</th>
+        <th>ISBN Number</th>
+        <th>Author Name</th>
+        <th>Book Type</th>
+         <th>Publisher</th>
+        
+        </tr>
+    <tr th:each="book : ${bookList}">
+        <td th:text="${book.bookNumber}"></td>
+        <td th:text="${book.bookName}"></td>
+        <td th:text="${book.isbnNumber}"></td>
+        <td th:text="${book.authorName}"></td>
+        <td th:text="${book.bookType}"></td>
+        <td th:text="${book.publisherName}"></td>
+    </tr>
+</table>
+<br><br>
+<a href="./userLand">Go To Main Page</a>
+</body>
+</html>

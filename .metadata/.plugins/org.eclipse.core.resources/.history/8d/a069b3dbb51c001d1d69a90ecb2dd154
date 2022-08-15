@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Delete Employee</title>
+</head>
+<body>
+<h1>Library Management System</h1>
+<hr>
+
+<hr>
+<form action="#"  method="post" th:object="${command}" th:action="@{./searchEmployee}">
+    Select Employee ID :<input type="number" name="employeeId"> <br>
+    <input type="submit" value="Search Employee">
+</form>
+<br><br>
+<a href="./adminLanding">Go To Main Page</a>
+</body>
+</html>

@@ -9,9 +9,9 @@
 <h1>LIBRARY MANAGEMENT SYSTEM</h1>
 <hr>
 <form action="#" th:action="@{./login}" method="post" th:object="${command}">
-    Enter Email : <input type="email" th:field="*{userName}">
+    Enter Email : <input type="email" th:field="*{email}">
     <br><br>
-    Enter Password : <input type="password" th:field="*{password}">
+    Enter Password : <input type="password" th:field="*{pass}">
     <br><br>
     <input type="submit" value="Login">
 </form>

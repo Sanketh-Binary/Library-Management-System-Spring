@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+</head>
+<body>
+<h1>Employee Management System</h1>
+<hr>
+<hr>
+<form action="#" method="post" th:action="@{./saveBook}" th:object="${book}">
+
+    Enter Book ID : <input type="text" th:field="*{bookId}"><br><br>
+
+    Enter Book Name : <input type="text" th:field="*{bookName}"><br><br>
+
+     Enter ISBN Number : <input type="text" th:field="*{isbnNumber}"><br><br>
+    
+    Enter Author Name :<input type="text" th:field="*{authorName}"><br><br>
+    
+     Enter Publisher Name :<input type="text" th:field="*{publisherName}"><br><br>
+    
+     
+     Enter Genres :<input type="text" th:field="*{bookType}"><br><br>
+      Enter Number of Books :<input type="text" th:field="*{bookNumber}"><br><br>
+    
+   
+    <input type="submit" value="Add Book">
+</form>
+
+<br><br>
+
+<a href="./adminLand">Go to Main Page</a>
+</body>
+</html>

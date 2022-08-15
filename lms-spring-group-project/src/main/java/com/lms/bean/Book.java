@@ -2,24 +2,42 @@ package com.lms.bean;
 
 public class Book {
 
+	private int bookId;
     private String bookName;
     private int isbnNumber;
     private String authorName;
     private String publisherName;
     private String bookType;
     private int bookNumber;
+    
 
-    public Book(String bookName, int isbnNumber, String authorName, String publisherName, String bookType, int bookNumber) {
-        super();
-        this.bookName = bookName;
-        this.isbnNumber = isbnNumber;
-        this.authorName = authorName;
-        this.publisherName = publisherName;
-        this.bookType = bookType;
-        this.bookNumber = bookNumber;
-    }
+   
 
-    public String getBookName() {
+    public Book(int bookId, String bookName, int isbnNumber, String authorName, String publisherName, String bookType,
+			int bookNumber) {
+		super();
+		this.bookId = bookId;
+		this.bookName = bookName;
+		this.isbnNumber = isbnNumber;
+		this.authorName = authorName;
+		this.publisherName = publisherName;
+		this.bookType = bookType;
+		this.bookNumber = bookNumber;
+	}
+
+	public Book() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
+	}
+
+	public String getBookName() {
         return bookName;
     }
 

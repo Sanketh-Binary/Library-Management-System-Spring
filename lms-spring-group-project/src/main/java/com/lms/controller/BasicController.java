@@ -17,10 +17,10 @@ public class BasicController {
 	@Autowired
 	private EmployeeService es;
 	
-	@RequestMapping("/")
-	public ModelAndView home() {
-		
-		return new ModelAndView("index.html");
-		
-	}
+//	@RequestMapping("/")
+//	public ModelAndView home() {
+//		
+//		return new ModelAndView("index.html");
+//		
+//	}
 }

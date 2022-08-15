@@ -1,0 +1,27 @@
+package com.lms.model.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Service;
+
+import com.lms.bean.User;
+import com.lms.model.persistence.UserDao;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	private UserDao userDao;
+	
+	public boolean checkUser(User user) {
+		if(userDao.getUser(user.getEmail(), user.getPass())!=null)
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean checkUser(com.lms.bean.User user) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+}
