@@ -174,22 +174,23 @@ public class BookLMSImpl implements BookLMSDAO {
     public String checkReturnDate(int empID, int bookId) {
         StringBuilder sb = new StringBuilder();
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/lms", "root", pass);
+        try (Connection connection = DriverManager.getConnection
+                ("jdbc:mysql://127.0.0.1:3306/lms", "root", pass);
              PreparedStatement preparedStatement = connection
-                     .prepareStatement("SELECT returnDate FROM tbr INNER JOIN transactions using(transactionID) " +
-                             "WHERE bookId = ? AND employeeID = ?")) {
+                     .prepareStatement(
+                             "SELECT returnDate FROM employee INNER JOIN transations using(employeeID) " +
+                                     "INNER JOIN tbr using(transationId) " +
+                                     "WHERE bookId = ? AND employeeID = ?")) {
             preparedStatement.setInt(1, bookId);
             preparedStatement.setInt(2, empID);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 java.sql.Date date = resultSet.getDate("returnDate");
-                sb.append(empID);
-                sb.append(" ");
-                sb.append(bookId);
-                sb.append(" ");
-                sb.append(date.toString());
-                sb.append(" ");
+                sb.append("EmpID: ").append(empID).append("| ");
+                sb.append("Book ID: ").append(bookId).append("| ");
+                sb.append("Return Date: ").append(date.toString()).append("\n");
+
             }
         } catch (SQLException e) {
             System.out.println(e.getLocalizedMessage());
@@ -200,36 +201,42 @@ public class BookLMSImpl implements BookLMSDAO {
     @Override
     public boolean returnBook(int transactionID) {
         int r1 = 0;
+        int rs1 = 0;
         boolean r2 = false;
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/lms", "root", pass);
-             PreparedStatement preparedStatement = connection
-                     .prepareStatement("UPDATE tbr SET returnDate=NOW() WHERE transactionID = ?")) {
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/lms", "root", pass)) {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("UPDATE tbr SET returnDate = NOW() WHERE transationID = ?");
             preparedStatement.setInt(1, transactionID);
+            PreparedStatement ps1 = connection
+                    .prepareStatement("UPDATE employee SET booksIssued = booksIssued - 1 WHERE employeeId = " +
+                            "(SELECT employeeID FROM transations WHERE transationID = ?)");
+            ps1.setInt(1, transactionID);
+            rs1 = ps1.executeUpdate();
             r1 = preparedStatement.executeUpdate();
 
-            PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT * from tbr where transactionId = ?");
-            preparedStatement2.setInt(1, transactionID);
-            ResultSet resultSet2 = preparedStatement2.executeQuery();
+//            PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT * from tbr where transationId = ?");
+//            preparedStatement2.setInt(1, transactionID);
+//            ResultSet resultSet2 = preparedStatement2.executeQuery();
 
-            int bookId = 0;
-            if (resultSet2.next()) {
-                bookId = resultSet2.getInt("bookId");
-            }
+//            int bookId = 0;
+//            if (resultSet2.next()) {
+//                bookId = resultSet2.getInt("bookId");
+//            }
+//
+//            if (bookId > 0) {
+//                r2 = calculateFine(transactionID, bookId) > 0.0;
+//            }
 
-            if (bookId > 0) {
-                r2 = calculateFine(transactionID, bookId) > 0.0;
-            }
-
-            PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE book SET noOfBooks = noOfBooks + 1 WHERE "
-                    + "bookID = ?");
-            preparedStatement3.setInt(1, bookId);
-            preparedStatement3.executeUpdate();
+//            PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE book SET noOfBooks = noOfBooks + 1 WHERE "
+//                    + "bookID = ?");
+//            preparedStatement3.setInt(1, bookId);
+//            preparedStatement3.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return r1 > 0.0 && r2;
+        return r1 > 0 && rs1 > 0;
+//        return r1 > 0.0 && r2;
     }
 
     private double calculateFine(int transactionId, int bookID) {
