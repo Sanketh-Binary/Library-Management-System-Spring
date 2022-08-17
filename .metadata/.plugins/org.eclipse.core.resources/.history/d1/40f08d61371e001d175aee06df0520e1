@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert Employee</title>
+</head>
+<body>
+<h1>Employee Management System</h1>
+<hr>
+
+<hr>
+<form action="#" method="post" th:action="@{./saveEmployee}" th:object="${emp}">
+
+    Enter Employee ID : <input type="text" th:field="*{employeeId}"><br><br>
+
+    Enter Employee First Name : <input type="text" th:field="*{empFirstName}"><br><br>
+
+     Enter Employee Last Name : <input type="text" th:field="*{empLastName}"><br><br>
+    
+    Enter Employee Designation :<input type="text" th:field="*{designation}"><br><br>
+    
+   
+    <input type="submit" value="Add Employee">
+</form>
+
+<br><br>
+
+<a href="./adminLand">Go to Main Page</a>
+</body>
+</html>

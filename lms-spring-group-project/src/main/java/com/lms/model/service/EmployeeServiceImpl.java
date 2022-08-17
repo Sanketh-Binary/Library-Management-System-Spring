@@ -6,11 +6,14 @@ import com.lms.model.persistence.EmployeeDaoImpl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private final EmployeeDao employeeDao = new EmployeeDaoImpl();
+    
+    @Autowired
+    private EmployeeDao employeeDao;
 
     @Override
     public Boolean addEmployee(Employee employee) {

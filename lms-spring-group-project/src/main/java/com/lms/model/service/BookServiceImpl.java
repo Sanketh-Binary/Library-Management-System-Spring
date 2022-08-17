@@ -7,11 +7,14 @@ import com.lms.model.persistence.BookLMSImpl;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BookServiceImpl implements BookService {
-    private final BookLMSDAO bookLMSDAO = new BookLMSImpl();
+	
+	@Autowired
+    private BookLMSDAO bookLMSDAO ;
 
     @Override
     public Boolean addBook(Book book) {

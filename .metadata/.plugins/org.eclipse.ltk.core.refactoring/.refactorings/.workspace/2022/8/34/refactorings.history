@@ -1,4 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;Library-ManagementSystem&apos;" deleteContents="false" description="Delete resource &apos;Library-ManagementSystem&apos;" element1="/Library-ManagementSystem" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1660503255790"/>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;Library-ManagementSystem&apos;" deleteContents="false" description="Delete resource &apos;Library-ManagementSystem&apos;" element1="/Library-ManagementSystem" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1660503255790"/>&#x0A;<refactoring comment="Delete resource &apos;lms-spring-group-project&apos;" deleteContents="false" description="Delete resource &apos;lms-spring-group-project&apos;" element1="/lms-spring-group-project" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1660742588803"/>
 </session>

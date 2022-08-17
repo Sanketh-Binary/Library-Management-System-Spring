@@ -54,21 +54,8 @@ public class EmployeeController {
     }
 
     @RequestMapping("/saveEmployee")
-//	public ModelAndView saveEmployeeController(HttpServletRequest request) {
-//	public ModelAndView saveEmployeeController(@RequestParam("empId") int id,@RequestParam("empName") String name,
-//			@RequestParam("empDesig") String desig,@RequestParam("empDeptt") String deptt,
-//			@RequestParam("empEmail") String email,@RequestParam("empSalary") double sal) {
-    public ModelAndView saveEmployeeController(@ModelAttribute("emp") Employee employee) {
+    public ModelAndView saveEmployeeController(@ModelAttribute("emp")Employee employee) {
         ModelAndView modelAndView = new ModelAndView();
-//
-//		Employee employee = new Employee();
-//		employee.setEmpId(id);
-//		employee.setEmpName(name);
-//		employee.setEmpDesignation(desig);
-//		employee.setEmpDepartment(deptt);
-//		employee.setEmpEmail(email);
-//		employee.setEmpSalary(sal);
-
         String message = null;
         if (employeeService.addEmployee(employee))
             message = "Employee Addded Successfully";
