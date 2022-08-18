@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Book Return Date</title>
+</head>
+<body>
+<h1>Library Management System</h1>
+<hr>
+
+<hr>
+<form action="#" method="post" th:action="@{./checkReturnDate}">
+
+    Enter Employee ID : <input type="text" th:field="*{employeeId}"><br><br>
+    Enter Book ID : <input type="text" th:field="*{bookId}"><br><br>
+   
+    <input type="submit" value="Check Return Date">
+</form>
+
+<br><br>
+
+<a href="./userLand">Go to Main Page</a>
+</body>
+</html>
