@@ -1,16 +1,13 @@
 package com.lms.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.lms.bean.Book;
-import com.lms.bean.Employee;
 import com.lms.model.service.BookService;
 
 @Controller
@@ -19,8 +16,42 @@ public class BookController {
 	@Autowired
 	private BookService bs;
 	
+	@RequestMapping("/returnBookInput")
+    public ModelAndView inputReturnBookController() {
+        return new ModelAndView("ReturnBookInput");
+    }
 	
-
+	@RequestMapping("returnBook")
+	public ModelAndView returnBookController(@RequestParam("tranID") int tranID) {
+		boolean result =  bs.returnBook(tranID);
+		String rs = result == true ? "Success Return" : "Failed During Return";
+		return new ModelAndView("ReturnBookDateOutput", "message", rs);
+	}
+	
+	////
+	@RequestMapping("/checkReturnDateInput")
+    public ModelAndView inputCheckReturnBook() {
+        return new ModelAndView("BookReturnDateInput");
+    }
+	
+	@RequestMapping("checkReturnDate")
+	public ModelAndView  getReturnDateController(@RequestParam("employeeId") int empID, 
+			@RequestParam("bookId") int bookId ) {
+		String result =  bs.checkDueReturnDate(empID, bookId);
+		
+		return new ModelAndView("ReturnBookDateOutput", "message", result);
+	}	
+	////
+	
+	
+	@RequestMapping("issueBookForEmployee")
+	public ModelAndView  issueBookController() {
+		
+		boolean result = bs.issueBook(0, 0, null); //Please fill
+		String rs = result == true ? "Book Issued" : "Failure";
+		return new ModelAndView("IssueBook", "message", rs);
+	}
+	
 	@RequestMapping("showBooks")
 	public ModelAndView  showBook() {
 		
@@ -35,7 +66,7 @@ public class BookController {
 	}
 	
 	@RequestMapping("/saveBook")
-public ModelAndView saveBook(@ModelAttribute("book") Book book) {
+	public ModelAndView saveBook(@ModelAttribute("book") Book book) {
         ModelAndView modelAndView = new ModelAndView();
 
         String message = null;
@@ -91,6 +122,5 @@ public ModelAndView saveBook(@ModelAttribute("book") Book book) {
 	            modelAndView.setViewName("Output2");
 	        }
 	        return modelAndView;
-	    }
-	    
+	    }    
 }
