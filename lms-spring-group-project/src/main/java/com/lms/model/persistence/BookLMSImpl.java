@@ -18,7 +18,7 @@ public class BookLMSImpl implements BookLMSDAO {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	String pass = "wiley";
+	String pass = "root";
 
 	@Override
 	public boolean addBook(Book book) {
@@ -42,9 +42,7 @@ public class BookLMSImpl implements BookLMSDAO {
 	public int removeBook(String bookName) {
 		int rows = 0;
 	String query = "DELETE FROM book WHERE bookName=?";
-    	
     	 rows = jdbcTemplate.update(query, bookName);
-
 		return rows;
 	}
 
@@ -70,8 +68,6 @@ public class BookLMSImpl implements BookLMSDAO {
 				PreparedStatement preparedStatement2 = connection
 						.prepareStatement("update employee set booksIssued = booksIssued+1 where employeeId =?;");
 				PreparedStatement preparedStatement = connection.prepareStatement("{call insertIntoTBR(?,?,?,?)}");) {
-//			PreparedStatement preparedStatement2 = connection
-//                    .prepareStatement("select transactionid from ");
 
 			int f = 0;
 			int rand = 0;
@@ -80,11 +76,6 @@ public class BookLMSImpl implements BookLMSDAO {
 				int min = 20000;
 				int range = max - min + 1;
 				rand = (int) (Math.random() * range) + min;
-//                 preparedStatement1.setInt(1,rand);
-//                 ResultSet resultSet1 = preparedStatement1.executeQuery();
-//                 if(!resultSet1.next()) {
-//                	 f=1;
-//                 }
 				f = 1;
 			}
 			preparedStatement1.setInt(1, rand);
@@ -123,14 +114,16 @@ public class BookLMSImpl implements BookLMSDAO {
 
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/lms", "root", pass);
 				PreparedStatement preparedStatement = connection
-						.prepareStatement("SELECT returnDate FROM employee INNER JOIN transations using(employeeID) "
+						.prepareStatement("SELECT scheduledReturn FROM employee INNER JOIN transations using(employeeID) "
 								+ "INNER JOIN tbr using(transationId) " + "WHERE bookId = ? AND employeeID = ?")) {
 			preparedStatement.setInt(1, bookId);
 			preparedStatement.setInt(2, empID);
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-				java.sql.Date date = resultSet.getDate("returnDate");
+				
+				Date date = resultSet.getDate("scheduledReturn");
+				System.out.println(date);
 				sb.append("EmpID: ").append(empID).append("| ");
 				sb.append("Book ID: ").append(bookId).append("| ");
 				sb.append("Return Date: ").append(date.toString()).append("\n");
@@ -143,10 +136,10 @@ public class BookLMSImpl implements BookLMSDAO {
 	}
 
 	@Override
-	public boolean returnBook(int transactionID) {
+	public String returnBook(int transactionID) {
 		int r1 = 0;
 		int rs1 = 0;
-		boolean r2 = false;
+		String r2 = "";
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/lms", "root", pass)) {
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("UPDATE tbr SET returnDate = NOW() WHERE transationID = ?");
@@ -158,44 +151,53 @@ public class BookLMSImpl implements BookLMSDAO {
 			rs1 = ps1.executeUpdate();
 			r1 = preparedStatement.executeUpdate();
 
-//            PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT * from tbr where transationId = ?");
-//            preparedStatement2.setInt(1, transactionID);
-//            ResultSet resultSet2 = preparedStatement2.executeQuery();
+            PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT * from tbr where transationId = ?");
+            preparedStatement2.setInt(1, transactionID);
+            ResultSet resultSet2 = preparedStatement2.executeQuery();
 
-//            int bookId = 0;
-//            if (resultSet2.next()) {
-//                bookId = resultSet2.getInt("bookId");
-//            }
+            int bookId = 0;
+            if (resultSet2.next()) {
+                bookId = resultSet2.getInt("bookId");
+            }
 //
-//            if (bookId > 0) {
-//                r2 = calculateFine(transactionID, bookId) > 0.0;
-//            }
+            if (bookId > 0) {
+                r2 = r2 + "" + calculateFine(transactionID, bookId);
+            }
 
-//            PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE book SET noOfBooks = noOfBooks + 1 WHERE "
-//                    + "bookID = ?");
-//            preparedStatement3.setInt(1, bookId);
-//            preparedStatement3.executeUpdate();
+            PreparedStatement preparedStatement3 = connection.prepareStatement("UPDATE book SET noOfBooks = noOfBooks + 1 WHERE "
+                    + "bookID = ?");
+            preparedStatement3.setInt(1, bookId);
+            preparedStatement3.executeUpdate();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return r1 > 0 && rs1 > 0;
-//        return r1 > 0.0 && r2;
+		return r2;
 	}
 
 	private double calculateFine(int transactionId, int bookID) {
 		try (Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/lms", "root", pass)) {
+			
 			PreparedStatement preparedStatement = connection
-					.prepareStatement("SELECT issueDate, scheduleReturn FROM tbr where transactionId = ?");
+					.prepareStatement("SELECT issueDate, returnDate FROM tbr where transationId = ?");
+			
 			preparedStatement.setInt(1, transactionId);
+			
 			ResultSet resultSet = preparedStatement.executeQuery();
-
-			java.sql.Date issueDate = resultSet.getDate("issueDate");
-			java.sql.Date returnDate = resultSet.getDate("scheduledReturn");
+		
+			java.sql.Date issueDate = null;
+			java.sql.Date returnDate = null;
+			
+			if(resultSet.next()) {
+				issueDate = resultSet.getDate("issueDate");
+				returnDate = resultSet.getDate("returnDate");
+			}
 
 			PreparedStatement diff = connection.prepareStatement("SELECT DATEDIFF(?, ?) AS diff");
-			diff.setString(1, String.valueOf(issueDate));
-			diff.setString(2, String.valueOf(returnDate));
+			
+			diff.setString(1, String.valueOf(returnDate));
+			diff.setString(2, String.valueOf(issueDate));
+			
 			ResultSet days_rs = diff.executeQuery();
 
 			int days = -1;
@@ -205,22 +207,28 @@ public class BookLMSImpl implements BookLMSDAO {
 
 			PreparedStatement preparedStatement1 = connection
 					.prepareStatement("SELECT bookType from book where " + "bookId = ?");
+			
 			preparedStatement1.setInt(1, bookID);
 			ResultSet rs = preparedStatement1.executeQuery();
+			
 			String bookType = null;
+			System.out.println("-------------------------------------------->>>>>>>>>>>>>>>>>" + days);
 			if (rs.next()) {
 				bookType = rs.getString("bookType");
 			}
 
 			if (days > 7) {
-				switch (Objects.requireNonNull(bookType)) {
-				case "Data Analytics":
+				
+				if(bookType.compareToIgnoreCase("Data Analytics") == 0) {
 					return 5 * (days - 7);
-				case "Technology":
+				}
+				else if (bookType.compareToIgnoreCase("Technology") == 0) {
 					return 6 * (days - 7);
-				case "Management":
+				}
+				else if (bookType.compareToIgnoreCase("Management") == 0) {
 					return 7 * (days - 7);
 				}
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

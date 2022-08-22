@@ -9,10 +9,7 @@ public class Book {
     private String publisherName;
     private String bookType;
     private int bookNumber;
-    
-
-   
-
+ 
     public Book(int bookId, String bookName, int isbnNumber, String authorName, String publisherName, String bookType,
 			int bookNumber) {
 		super();

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import com.lms.bean.Book;
+import com.lms.bean.Employee;
 import com.lms.model.service.BookService;
 
 @Controller
@@ -21,11 +22,11 @@ public class BookController {
         return new ModelAndView("ReturnBookInput");
     }
 	
-	@RequestMapping("returnBook")
+	@RequestMapping("/returnBook")
 	public ModelAndView returnBookController(@RequestParam("tranID") int tranID) {
-		boolean result =  bs.returnBook(tranID);
-		String rs = result == true ? "Success Return" : "Failed During Return";
-		return new ModelAndView("ReturnBookDateOutput", "message", rs);
+		String result =  "Fine = " + bs.returnBook(tranID);
+//		String rs = result == true ? "Success Return" : "Failed During Return";
+		return new ModelAndView("ReturnBookDateOutput", "message", result);
 	}
 	
 	////
@@ -34,11 +35,10 @@ public class BookController {
         return new ModelAndView("BookReturnDateInput");
     }
 	
-	@RequestMapping("checkReturnDate")
-	public ModelAndView  getReturnDateController(@RequestParam("employeeId") int empID, 
+	@RequestMapping("/checkReturnDate")
+	public ModelAndView  getReturnDateController(@RequestParam("eid") int empID, 
 			@RequestParam("bookId") int bookId ) {
 		String result =  bs.checkDueReturnDate(empID, bookId);
-		
 		return new ModelAndView("ReturnBookDateOutput", "message", result);
 	}	
 	////

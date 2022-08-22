@@ -17,5 +17,7 @@ public interface BookService {
     
 	String checkDueReturnDate(int empID, int bookID);
 	
-	boolean returnBook(int tranID);
+	String returnBook(int tranID);
+	
+	
 }

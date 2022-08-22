@@ -4,9 +4,7 @@ import com.lms.bean.Employee;
 import com.lms.model.persistence.helper.EmployeeRowMapper;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,7 +16,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	String pass="wiley";
+	String pass= "root";
+	
     @Override
     public Integer addEmployee(Employee employee) {
         int rows = 0;
@@ -68,7 +67,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		String qry="Select employeeId,type from user where email=? and pass=?";
 		int eid=0;
 		boolean type=false;
-		 try (Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/lms","root","wiley");
+		 try (Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/lms","root","root");
 	          PreparedStatement preparedStatement = connection.prepareStatement(qry);) {
 			 
 			 preparedStatement.setString(1, email);

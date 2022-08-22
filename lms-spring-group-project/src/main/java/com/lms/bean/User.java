@@ -3,9 +3,10 @@ package com.lms.bean;
 
 public class User {
 
-		private String email;
+	private String email;
 	private String pass;
 	private int isAdmin;
+	
 	public int isAdmin() {
 		return isAdmin;
 	}

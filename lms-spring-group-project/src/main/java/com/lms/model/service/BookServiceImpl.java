@@ -2,8 +2,6 @@ package com.lms.model.service;
 
 import com.lms.bean.Book;
 import com.lms.model.persistence.BookLMSDAO;
-import com.lms.model.persistence.BookLMSImpl;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
 	
 	@Autowired
-    private BookLMSDAO bookLMSDAO ;
+    private BookLMSDAO bookLMSDAO;
 
     @Override
     public Boolean addBook(Book book) {
@@ -49,7 +47,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean returnBook(int tranID) {
+    public String returnBook(int tranID) {
         return bookLMSDAO.returnBook(tranID);
     }
 }

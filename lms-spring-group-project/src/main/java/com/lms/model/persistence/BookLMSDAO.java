@@ -18,5 +18,5 @@ public interface BookLMSDAO {
     
 	String checkReturnDate(int empID, int bookID);
 	
-	boolean returnBook(int transctionID);
+	String returnBook(int transctionID);
 }

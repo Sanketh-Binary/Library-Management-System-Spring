@@ -15,5 +15,4 @@ public class UserRowMapper implements RowMapper<User> {
 		User user=new User(resultSet.getString("email"), resultSet.getString("pass"),resultSet.getInt("type"));
 		return user;
 	}
-
 }
