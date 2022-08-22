@@ -9,10 +9,10 @@
 <hr>
 
 <hr>
-<form action="#" method="post" th:action="@{./checkReturnDate}">
+<form action="#" method="post" th:action="@{./checkReturnDate}" >
 
-    Enter Employee ID : <input type="text" th:field="*{employeeId}"><br><br>
-    Enter Book ID : <input type="text" th:field="*{bookId}"><br><br>
+    Enter Employee ID : <input type="text" name="eid"><br><br>
+    Enter Book ID : <input type="text" name="bookId"><br><br>
    
     <input type="submit" value="Check Return Date">
 </form>

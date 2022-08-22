@@ -9,5 +9,4 @@ public class LmsSpringGroupProjectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LmsSpringGroupProjectApplication.class, args);
 	}
-
 }

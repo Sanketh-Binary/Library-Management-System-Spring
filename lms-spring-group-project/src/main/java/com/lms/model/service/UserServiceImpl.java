@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int checkAdmin(User user) {
-		
 		return userDao.checkAdminCtrl(user.getEmail(),user.getPass());
 	}
 

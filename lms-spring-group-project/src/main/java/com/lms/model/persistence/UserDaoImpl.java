@@ -35,7 +35,4 @@ public class UserDaoImpl implements UserDao {
 		return u.isAdmin();
 	}
 
-	
-	
-
 }

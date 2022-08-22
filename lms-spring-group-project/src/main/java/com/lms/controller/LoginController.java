@@ -33,12 +33,15 @@ public class LoginController {
     }
 
     @RequestMapping("/login")
-    public ModelAndView loginController(@ModelAttribute User user,HttpSession session) {
+    public ModelAndView loginController(@ModelAttribute User user, HttpSession session) {
 
         ModelAndView modelAndView=new ModelAndView();
+        
         if (userService.checkUser(user)) {
-            modelAndView.addObject("user", user);  //user object added at request scope
+        	
+           modelAndView.addObject("user", user);  //user object added at request scope
            session.setAttribute("user", user);
+           
             if(userService.checkAdmin(user)==1) {
             	modelAndView.setViewName("adminLanding");
             }else {

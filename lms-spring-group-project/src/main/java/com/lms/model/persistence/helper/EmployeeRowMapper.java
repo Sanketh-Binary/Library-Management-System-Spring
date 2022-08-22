@@ -1,13 +1,9 @@
 package com.lms.model.persistence.helper;
 
 import java.sql.ResultSet;
-
 import java.sql.SQLException;
-
 import org.springframework.jdbc.core.RowMapper;
-
 import com.lms.bean.Employee;
-
 public class EmployeeRowMapper implements RowMapper<Employee> {
 
 	@Override
